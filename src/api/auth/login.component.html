@@ -1,0 +1,28 @@
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center text-indigo-600">supOS 登录</h2>
+    
+    <div *ngIf="!isLoggedIn; else loggedInView">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- 表单字段 -->
+        <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition">
+          登录
+        </button>
+      </form>
+      
+      <div class="mt-4 text-center">
+        <a routerLink="/register" class="text-indigo-600 hover:underline">注册新账户</a>
+      </div>
+    </div>
+
+    <ng-template #loggedInView>
+      <div class="text-center">
+        <p class="mb-4">欢迎回来，{{username}}!</p>
+        <button (click)="logout()" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+          退出登录
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

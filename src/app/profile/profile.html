@@ -1,0 +1,121 @@
+<!-- profile.component.html -->
+    <style>
+        .profile-card {
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px -5px rgba(0,0,0,0.15);
+        }
+        .input-field:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+        }
+        .save-btn {
+            background-image: linear-gradient(to right, #6366f1, #8b5cf6);
+        }
+    </style>
+<div class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="profile-card bg-white rounded-xl p-8 w-full max-w-2xl">
+        <div *ngIf="user" class="flex justify-between items-center mb-8">
+            <div>
+            <h1 class="text-3xl font-bold text-gray-800">个人资料</h1>
+            <div class="text-indigo-600">
+                <i class="fas fa-user-edit text-2xl"></i>
+            </div>
+        </div>
+        <form (ngSubmit)="updateProfile()" id="profileForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-gray-700 mb-2">用户名</label>
+                    <input  [(ngModel)]="user.username" name="username"
+                    type="text" id="username" 
+                           class="input-field w-full px-4 py-2 border rounded-lg focus:outline-none">
+                </div>        
+                <div>
+                    <label class="block text-gray-700 mb-2">出生日期</label>
+                    <input type="date" [(ngModel)]="user.birthdate" name="birthdate" id="birthdate" 
+                           class="input-field w-full px-4 py-2 border rounded-lg focus:outline-none">
+                </div>               
+                <div>
+                    <label class="block text-gray-700 mb-2">年龄</label>
+                    <input type="number" id="age" [(ngModel)]="user.age" name="age"
+                           class="input-field w-full px-4 py-2 border rounded-lg focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">邮箱</label>
+                    <input type="email" id="email" [(ngModel)]="user.email" name="email" readonly
+                           class="input-field w-full px-4 py-2 border rounded-lg focus:outline-none">
+                </div>
+            <div class="flex justify-end space-x-4 pt-6">
+                <button type="button" onclick="loadUserData()" 
+                        class="px-6 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
+                    重新加载
+                </button>
+                <button type="submit" 
+                        class="save-btn px-6 py-2 text-white rounded-lg hover:opacity-90 transition">
+                    保存更改
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+    <script>
+        // 加载用户数据到表单
+        function loadUserData() {
+            const userData = fetchUserData();
+            document.getElementById('username').value = userData.username;
+            document.getElementById('birthdate').value = userData.birthdate;
+            document.getElementById('age').value = userData.age;
+            document.getElementById('email').value = userData.email;
+            document.getElementById('expiryDate').value = userData.expiryDate;
+            
+            showToast('数据加载成功', 'success');
+        }
+
+        // 保存表单数据
+        function saveUserData(formData) {
+            // 实际应用中这里应该是AJAX请求
+            console.log('保存的数据:', formData);
+            showToast('资料更新成功', 'success');
+        }
+
+        // 显示提示信息
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            }`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // 表单提交处理
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                username: document.getElementById('username').value,
+                birthdate: document.getElementById('birthdate').value,
+                age: parseInt(document.getElementById('age').value),
+                email: document.getElementById('email').value,
+                expiryDate: document.getElementById('expiryDate').value
+            };
+            
+            // 简单验证
+            if (!formData.email.includes('@')) {
+                showToast('请输入有效的邮箱地址', 'error');
+                return;
+            }
+            
+            saveUserData(formData);
+        });
+
+        // 页面加载时自动获取用户数据
+        window.addEventListener('DOMContentLoaded', loadUserData);
+    </script>

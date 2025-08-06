@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>登陆页面</title>
+</head>
+<script src=login.service.ts></script>
+<body>
+
+<div class="loginBox">
+        <!-- 登录表单示例 -->
+<form action="/login" method="post">
+  <label for="username">用户名:</label>
+  <input type="text" id="username" name="username" required></br>
+  <label for="password">密码:</label>
+  <input type="password" id="password" name="password" required>
+  <label></br>
+    <input type="checkbox" name="remember_me" value="true">
+    记住我 (7天)
+  </label>
+  <button type="submit">登录</button>
+</form>
+</div>
+  <script>
+const express = require('express');
+const app = express();
+
+app.post('/login', (req, res) => {
+  // 验证用户凭据...
+  
+  if (req.body.remember_me) {
+    // 创建7天有效期的cookie
+    res.cookie('authToken', 'your-auth-token', {
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production'
+    });
+  }
+  
+  res.redirect('/dashboard');
+});
+  </script>
+</body>
+</html>
