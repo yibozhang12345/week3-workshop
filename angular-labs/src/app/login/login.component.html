@@ -1,0 +1,10 @@
+<h2>登录</h2>
+<form (ngSubmit)="login()">
+  <label>用户名: </label>
+  <input [(ngModel)]="username" name="username" required>
+  <br>
+  <label>密码: </label>
+  <input type="password" [(ngModel)]="password" name="password" required>
+  <br><br>
+  <button type="submit">登录</button>
+</form>

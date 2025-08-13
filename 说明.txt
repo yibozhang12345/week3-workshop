@@ -1,0 +1,62 @@
+server.js 可能存在报错，可以尝试替换代码以解决问题
+app.get('/:path(*)', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/angular-labs/index.html'));
+});
+或者
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/angular-labs/index.html'));
+});
+
+
+
+任务 1：创建分支
+在您的 Angular 仓库中创建一个新分支，命名为 week5。
+git checkout -b week5
+
+在week5中执行（出现选项按回车即可）：
+//安装angular必要组件
+npx @angular/cli@17 new angular-labs --skip-git --skip-install --style=css --standalone=false
+//切换至angular文件夹中
+cd ./angular-labs
+//安装Mongodb数据库相关必要依赖
+npm install mongoose
+//angular生成个人资料、注册、登录基础组件
+ng generate component profile
+ng generate component register
+ng generate component login
+
+//然后去src文件夹中编辑profile、register、login组件信息（app.html是顶部导航栏）
+
+//生成并切换至server目录中
+mkdir server
+cd server
+//运行 npm init 在 server 目录中设置一个新的 Node.js 项目。
+npm init -y
+//安装 Express，用于设置后端服务器。
+npm install express
+
+//随后，编辑init-db.js和server.js文件
+
+//初始化数据库
+node server/init-db.js
+// 构建前端(需要先把src中的angular项目做完，node.js会根据你制作的angular网页进行转译，制作成适合express使用的网页)
+ng build --configuration production
+//启动服务（启动成功从3000端口进入）
+node server/server.js
+
+
+任务 5：提交和合并更改
+完成任务后，将更改提交到 week5 分支:
+
+git add .
+git commit -m "完成 Week 5 任务"
+
+将 week5 分支合并到 master 分支：
+切换到 master 分支并合并更改。
+
+git checkout master
+git merge week5
+
+将更改推送到远程仓库：
+
+git push origin master
