@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <!--使用了 Bootstrap 的 container 类，让内容居中、带有左右边距。
+      mt-4 表示 margin-top: 4 (上外边距),下文的mb-3 表示 margin-bottom: 3 (下外边距)-->
+  <h2 class="mb-3">💬 Live Chat</h2>
+
+  <!-- 输入框和按钮 -->
+  <form (ngSubmit)="sendMessage()" class="input-group mb-3"><!-- <form> 定义了一个表单。
+(ngSubmit)="sendMessage()" → Angular 语法，表示当用户提交表单时（点击按钮或按回车），会调用组件里的 sendMessage() 方法。
+class="input-group mb-3" → 使用 Bootstrap 的输入组样式，让输入框和按钮排在一行，并且底部有 mb-3 的间距。 -->
+    <input
+      [(ngModel)]="message"
+      name="message"          
+      type="text"
+      class="form-control"
+      placeholder="Type a message..."
+      required
+    />
+<!-- <input> → 单行文本框。
+[(ngModel)]="message" → 双向绑定，把输入框的值绑定到组件里的 message 变量。
+name="message" → 表单控件的名字（Angular 要求 ngModel 必须有 name 才能在表单里使用）。
+type="text" → 输入框类型是文本。
+class="form-control" → 使用 Bootstrap 样式，让输入框自适应宽度、外观美观。
+placeholder="Type a message..." → 输入框里的提示文字。
+required → 表单校验规则，表示输入框不能为空。 -->
+    <button class="btn btn-primary" type="submit">Send</button>
+<!-- class="btn btn-primary" → 使用 Bootstrap 的按钮样式，蓝色按钮。
+     type="submit" → 表单提交按钮，点击后会触发 (ngSubmit)，也就是调用 sendMessage() -->
+  </form>
+
+  <!-- 消息列表 -->
+  <ul class="list-group">
+    <li *ngFor="let msg of messages" class="list-group-item">
+      {{ msg }}
+    </li>
+  </ul>
+  <!--
+<ul class="list-group"> → Bootstrap 的列表容器。
+<li *ngFor="let msg of messages" class="list-group-item">
+    *ngFor="let msg of messages" → Angular 指令，循环遍历 messages 数组里的每一个元素。
+    每个 msg 都会渲染为一个 <li>。
+    class="list-group-item" → Bootstrap 样式，让每条消息显示成独立的列表项。
+{{ msg }} → 插值表达式，显示每条消息的具体内容。 -->
+</div>

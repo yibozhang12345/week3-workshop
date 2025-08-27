@@ -1,0 +1,24 @@
+启动后端：
+server文件夹中打开cmd：
+node server.js
+
+启动前端：
+week6文件夹中打开cmd
+ng serve --open
+
+3000端口提供消息缓存，不开3000端口的话会导致无法显示任何已发出消息（包括自己刚发出的）
+只有3000端口可以查看历史消息
+所有用户无法查看已经发出的历史消息，只能接收打开网页后才发出的消息
+
+server.js → 总入口，配置 Express + Socket.IO，并加载其他模块。
+sockets.js → 管理所有 Socket.IO 事件（连接、消息、断开）。
+listen.js → 负责开启服务端口监听。
+
+socket.service.ts → 真正的核心逻辑，负责前端和服务器通过 socket.io 通信。
+socket.spec.ts → 测试文件，只是简单验证服务能否创建
+
+app.module.ts → 应用的主模块，注册组件和模块。
+app-routing.module.ts → 定义路由规则，根路径加载聊天组件。
+app.component.html → 根模板，放置 <router-outlet>。
+app.component.ts → 根组件类，控制根模板。
+app.component.spec.ts → 自动生成的测试文件，测试根组件是否能正常运行。
