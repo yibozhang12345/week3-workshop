@@ -1,5 +1,5 @@
-// 应用配置文件：定义全局配置（可选）
+// 应用的全局配置（这里主要是 API 地址配置）
 export const AppConfig = {
-  apiUrl: 'http://localhost:3000',
-  appName: 'Week6 Demo App'
+  apiUrl: 'http://localhost:3000',  // 服务器地址
+  appName: 'Week6 Chat Demo'
 };

@@ -17,10 +17,8 @@ listen.js → 负责开启服务端口监听。
 socket.service.ts → 真正的核心逻辑，负责前端和服务器通过 socket.io 通信。
 socket.spec.ts → 测试文件，只是简单验证服务能否创建
 
-app.ts/html/css：应用主界面和逻辑（输入框、消息列表、发送消息）
-app.routes.ts：定义路由规则，根路径加载聊天组件。
-app.config.ts：配置常量。
-app.spec.ts：自动生成的测试文件，测试根组件是否能正常运行。
-
-运行逻辑：
-输入框 → 调用 AppComponent.sendMessage() → SocketsService.sendMessage() → 后端 → 广播消息 → SocketsService.onMessage() → 更新 messages → 页面更新
+app.module.ts → 应用的主模块，注册组件和模块。
+app-routing.module.ts → 定义路由规则，根路径加载聊天组件。
+app.component.html → 根模板，放置 <router-outlet>。
+app.component.ts → 根组件类，控制根模板。
+app.component.spec.ts → 自动生成的测试文件，测试根组件是否能正常运行。

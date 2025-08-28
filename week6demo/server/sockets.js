@@ -1,18 +1,23 @@
-// 导出一个函数，接收 io 对象作为参数
-module.exports = (io) => {
-  // 当有客户端连接时触发
-  io.on("connection", (socket) => {
-    console.log("Client connected:", socket.id);
+const { Server } = require('socket.io');
 
-    // 监听客户端发送的 "message" 事件
-    socket.on("message", (msg) => {
-      console.log("Received:", msg);
-      io.emit("message", msg); // 广播消息给所有已连接的客户端
+module.exports = (server) => {
+  const io = new Server(server, {
+    cors: {
+      origin: "http://localhost:4200",
+      methods: ["GET", "POST"]
+    }
+  });
+
+  io.on('connection', (socket) => {
+    console.log('Client connected:', socket.id);
+
+    socket.on('newmsg', (msg) => {
+      console.log(`Message received: ${msg}`);
+      io.emit('newmsg', msg); // 广播给所有客户端
     });
 
-    // 当客户端断开连接时触发
-    socket.on("disconnect", () => {
-      console.log("Client disconnected:", socket.id);
+    socket.on('disconnect', () => {
+      console.log('Client disconnected:', socket.id);
     });
   });
 };
